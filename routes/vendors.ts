@@ -1,11 +1,10 @@
-import { Router, Request, Response } from "express";
+import express, { Router, Request, Response } from "express";
+import { getVendors, createVendor } from "../controllers/vendorControllers";
 
-const router = Router();
+const router = express.Router();
 
 //get all vendors
-router.get("/", (req, res) => {
-  res.json({ message: "Get all vendors" });
-});
+router.get("/", getVendors);
 
 //get a single vendor
 router.get("/:id", (req, res) => {
@@ -14,12 +13,10 @@ router.get("/:id", (req, res) => {
 });
 
 //create a new vendor
-router.post("/", (req, res) => {
-  const newVendor = req.body;
-  res.status(201).json({ message: "Vendor created", vendor: newVendor });
-});
+router.post("/", createVendor);
 
 //PUT - update vendor
+
 router.put("/:id", (req, res) => {
   const vendorId = req.params.id;
   const updates = req.body;

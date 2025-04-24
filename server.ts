@@ -1,20 +1,17 @@
 import express, { Request, Response } from "express";
+import dotenv from "dotenv";
+import vendorRoutes from "./routes/vendors";
 
+dotenv.config();
 const app = express();
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("<h1>Hello, Express.js Server! </h1>");
-});
-
-//route files
-const vendorsRoute = require("./routes/vendors");
-
 //use Routes
-app.use("/vendor", vendorsRoute);
-
-const port = process.env.PORT || 3000;
+app.use(express.json());
+app.use("/vendor", vendorRoutes);
 
 //Listener
+const port = process.env.PORT || 3000;
+
 app.listen(port, () => {
   console.log(`The server is running on port ${port}`);
 });
