@@ -113,3 +113,20 @@ export const updateVendor = async (
     res.status(500).json({ error: "Failed to update vendor" });
   }
 };
+
+export const getVendorById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const result = await pool.query("SELECT * FROM vendors WHERE id = $1", [
+      id,
+    ]);
+
+    if (result.rows.length === 0) {
+      return res.status(400).json({ message: "Vendor not found" });
+    }
+    res.status(200).json(result.rows[0]);
+  } catch (error) {
+    console.error("Vendor not found by ID", error);
+    res.status(500).json({ error: "Failed to find vendor" });
+  }
+};
