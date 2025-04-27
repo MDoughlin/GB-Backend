@@ -1,32 +1,26 @@
-import express, { Router, Request, Response } from "express";
+import express from "express";
+import { Request, Response } from "express";
 import { getVendors, createVendor } from "../controllers/vendorControllers";
+
+import { updateVendor } from "../controllers/vendorControllers";
 
 const router = express.Router();
 
-//get all vendors
+// Get all vendors
 router.get("/", getVendors);
 
-//get a single vendor
-router.get("/:id", (req, res) => {
-  const vendorId = req.params.id;
-  res.json({ message: `get vendor with ID: ${vendorId}` });
-});
-
-//create a new vendor
+// Create a new vendor
 router.post("/", createVendor);
 
-//PUT - update vendor
-
-router.put("/:id", (req, res) => {
-  const vendorId = req.params.id;
-  const updates = req.body;
-  res.status(201).json({ message: `Vendor ${vendorId} updated` });
+// Update a vendor by id
+router.put("/:id", function (req, res) {
+  updateVendor(req, res);
 });
 
-//delete - delete vendor
+// Delete vendor
 router.delete("/:id", (req, res) => {
-  const vendorid = req.params.id;
-  res.json({ message: `Vendor ${vendorid} deleted` });
+  const vendorId = req.params.id;
+  res.json({ message: `Vendor ${vendorId} deleted` });
 });
 
 export default router;
