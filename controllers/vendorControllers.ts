@@ -130,3 +130,22 @@ export const getVendorById = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Failed to find vendor" });
   }
 };
+
+export const deleteVendor = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const result = await pool.query(
+      "DELETE FROM vendors WHERE Id + $1 RETURNING *",
+      [id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(400).json({ message: "Vendor not found" });
+    }
+    return res.status(200).json({ message: "Vendor sucessfully deleted" });
+  } catch (error) {
+    console.error("Error deleting vendor:", error);
+    return res.status(500).json({ error: "Failed to delete vendor" });
+  }
+};

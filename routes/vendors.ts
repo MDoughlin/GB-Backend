@@ -4,6 +4,7 @@ import {
   getVendors,
   createVendor,
   getVendorById,
+  deleteVendor,
 } from "../controllers/vendorControllers";
 
 import { updateVendor } from "../controllers/vendorControllers";
